@@ -33,7 +33,7 @@ uint8_t buflen = VW_MAX_MESSAGE_LEN;
 ///////////////////////////////////123456789012 
  char msgTxComandoRicevuto[13]  = "statACTU0007";
 // prefix to transmit
-///////////////////////////123456789012
+/////////////////////////123456789012
 char msgTxAnalogico[13]="anagACTU0000";
 char msgTxDigitale[13] ="digiACTU0000";
 //
@@ -107,6 +107,7 @@ void loop() {
     for (int i = 1; i <= POSIZIONE_CARATT; i++){
       stringaRX += char(buf[i-1]);
     }
+    //Serial.println(stringaRX);
     ////////////////123456789012
     if (stringaRX=="pulsACTU000"){
       switch (buf[POSIZIONE_CARATT]){
@@ -122,11 +123,11 @@ void loop() {
         break;
       case '3':
         // LEGGI STATO RELE
-        
+        txDigitale();
         break;        
       case '4':
         // LEGGI ANALOGICO 0
-        txRicevutoComando();
+        txAnalogico();
         break;
       }
     }
@@ -163,6 +164,7 @@ void txAnalogico(){
   vw_send((uint8_t *)msgTxAnalogico,MSG_LEN);
   vw_wait_tx(); // Wait until the whole message is gone
   vw_rx_start(); // enable rx section
+  //Serial.println(msgTxAnalogico);
   msgTxAnalogico[9]='0';
   msgTxAnalogico[10]='0';
   msgTxAnalogico[11]='0';
@@ -180,5 +182,6 @@ void txDigitale(){
   vw_send((uint8_t *)msgTxDigitale,MSG_LEN);
   vw_wait_tx(); // Wait until the whole message is gone
   vw_rx_start(); // enable rx section
-  msgTxAnalogico[11]='0';
+  //Serial.println(msgTxDigitale);
+  msgTxDigitale[11]='0';
 }
