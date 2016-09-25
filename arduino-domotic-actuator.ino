@@ -17,7 +17,7 @@ const int POSIZIONE_CARATT = 11;
 // STEP
 int internalStep=0;
 // LEDs
-const int pinLED =13;
+const int pinLED =2;
 // sensore analogico
 const int sensorPin = A0;
 // timing loop
