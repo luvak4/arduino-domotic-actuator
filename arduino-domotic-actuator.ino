@@ -50,7 +50,7 @@ void setup() {
   vw_set_rx_pin(receive_pin);  
   vw_setup(2000);      
   vw_rx_start(); 
-    Serial.begin(9600);
+  //  Serial.begin(9600);
 }
 //================================
 // loop
@@ -99,6 +99,7 @@ void loop() {
   // BEGIN message received
   //--------------------------------
   if (vw_get_message(buf, &buflen)){
+    vw_rx_stop(); 
     //
     stringaRX="";
     //
@@ -131,6 +132,7 @@ void loop() {
         break;
       }
     }
+    vw_rx_start(); 
   }
   //--------------------------------
   // END message received
@@ -147,23 +149,23 @@ void loop() {
 // send "command receive" to "display"
 //================================
 void txRicevutoComando(){
-  vw_rx_stop(); // disable rx section
+  //vw_rx_stop(); // disable rx section
   vw_send((uint8_t *)msgTxComandoRicevuto,MSG_LEN);
   vw_wait_tx(); // Wait until the whole message is gone
-  vw_rx_start(); // enable rx section
+  //vw_rx_start(); // enable rx section
 }
 
 void txAnalogico(){
   char c[3];
   int sensorValue = analogRead(sensorPin);
   itoa(sensorValue, c, 10);
-  vw_rx_stop(); // disable rx section
+  //vw_rx_stop(); // disable rx section
   msgTxAnalogico[9]=c[0];
   msgTxAnalogico[10]=c[1];
   msgTxAnalogico[11]=c[2];
   vw_send((uint8_t *)msgTxAnalogico,MSG_LEN);
   vw_wait_tx(); // Wait until the whole message is gone
-  vw_rx_start(); // enable rx section
+  //vw_rx_start(); // enable rx section
   //Serial.println(msgTxAnalogico);
   msgTxAnalogico[9]='0';
   msgTxAnalogico[10]='0';
