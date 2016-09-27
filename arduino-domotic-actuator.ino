@@ -38,6 +38,7 @@ char msgTxAnalogico[13]="anagACTU0000";
 char msgTxDigitale[13] ="digiACTU0000";
 //
 String stringaRX;
+int secondi=0;
 //
 //================================
 // setup
@@ -51,6 +52,9 @@ void setup() {
   vw_setup(2000);      
   vw_rx_start(); 
   //  Serial.begin(9600);
+  // SPEGNE PIN 13 ACCESO DI DEFAULT
+  pinMode(13,OUTPUT);
+  digitalWrite(13,LOW);
 }
 //================================
 // loop
@@ -95,6 +99,11 @@ void loop() {
   // every second
   //--------------------------------
   //
+  secondi+=1;
+  if (secondi > 120){
+    secondi=0;
+    txAnalogico();
+  }
   //--------------------------------
   // BEGIN message received
   //--------------------------------
