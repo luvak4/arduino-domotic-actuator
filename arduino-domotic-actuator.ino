@@ -141,6 +141,7 @@ void loop() {
         break;
       }
     }
+    delay(100);
     vw_rx_start(); 
   }
   //--------------------------------
@@ -189,10 +190,10 @@ void txDigitale(){
   } else {
     msgTxDigitale[11]='0';
   }
-  vw_rx_stop(); // disable rx section
+  //vw_rx_stop(); // disable rx section
   vw_send((uint8_t *)msgTxDigitale,MSG_LEN);
   vw_wait_tx(); // Wait until the whole message is gone
-  vw_rx_start(); // enable rx section
+  //vw_rx_start(); // enable rx section
   //Serial.println(msgTxDigitale);
   msgTxDigitale[11]='0';
 }
